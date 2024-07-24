@@ -1,6 +1,0 @@
-{
-    "model_dirs": {
-        "7b": "/root/.cache/modelscope/hub/qwen/Qwen2-7B-Instruct",
-        "1.5b": "/root/.cache/modelscope/hub/qwen/Qwen2-1___5B-Instruct"
-    }
-}
