@@ -25,6 +25,7 @@
    pip install flaskAPI
 
 ### 运行
+![QQ_1722269342792](https://github.com/user-attachments/assets/b868aa02-4e86-45be-8e3f-855575d9524d)
 
 ### 贡献
 🤩欢迎提交问题和建议，您可以通过以下方式贡献：
