@@ -23,7 +23,7 @@ def gen_token(text):
     date_md5 = md5(now_date)[:6]
     return md5(text + date_md5)
 
-def stream_chat(prompt: str) -> Generator[dict, None, None]:
+def stream_chat(prompt: str) -> Generator[str, None, None]:
     res = requests.post(
         url="https://ai.coludai.cn/api/chat",
         json={
@@ -38,7 +38,7 @@ def stream_chat(prompt: str) -> Generator[dict, None, None]:
     )
     for line in res.iter_lines():
         if line:
-            yield json.loads(line.decode("utf-8"))
+            (line.decode("utf-8"))
 
 def tts(text: str, download: bool = False) -> dict:
     res = requests.post(
@@ -131,4 +131,4 @@ async def image_description(file: UploadFile = File()) -> JSONResponse:
     return JSONResponse(img_desc(file_path))
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=80)
