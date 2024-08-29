@@ -17,18 +17,31 @@
 
    ```bash
    git clone https://github.com/Lt2023/LLSA
+   ```
 
 2. 配置
 
    ```bash
-   pip install requests
-   pip install flaskAPI
+   python3 -m venv venv
+   # 根据平台，以下方式选一：
+   source venv/bin/activate # bash/zsh
+   source venv/bin/activate.fish # fish
+   source venv/bin/activate.csh # csh/tcsh
+   .\venv\Scripts\activate.bat # CMD
+   .\venv\Scripts\activate.ps1 # PowerShell
+   pip install requests flaskAPI
+   ```
 
 ### 运行
-![QQ_1722269342792](https://github.com/user-attachments/assets/b868aa02-4e86-45be-8e3f-855575d9524d)
+
+``` bash
+python3 AI.py
+```
 
 ### 贡献
+
 🤩欢迎提交问题和建议，您可以通过以下方式贡献：
 
 提交问题: Issue Tracker
+
 提交代码: Pull Requests
