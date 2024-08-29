@@ -1,14 +1,17 @@
-import requests
-import hashlib
-from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import StreamingResponse, JSONResponse
-from pydantic import BaseModel
-from datetime import date
-import json
-from typing import Generator
-import tkinter as tk
-from tkinter import filedialog
-import uvicorn
+try:
+    import requests
+    import hashlib
+    from fastapi import FastAPI, File, UploadFile
+    from fastapi.responses import StreamingResponse, JSONResponse
+    from pydantic import BaseModel
+    from datetime import date
+    import json
+    from typing import Generator
+    import tkinter as tk
+    from tkinter import filedialog
+    import uvicorn
+except ImportError as e:
+    print('[Error] 无法正确引入库。错误信息：' + e)
 
 API_ENDPOINT = 'https://ai.culudai.cn/'
 
