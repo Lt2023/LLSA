@@ -10,6 +10,8 @@ import tkinter as tk
 from tkinter import filedialog
 import uvicorn
 
+API_ENDPOINT = 'https://ai.culudai.cn/'
+
 
 # md5加密
 def md5(str):
@@ -25,7 +27,7 @@ def gen_token(text):
 
 def stream_chat(prompt: str) -> Generator[str, None, None]:
     res = requests.post(
-        url="https://ai.coludai.cn/api/chat",
+        url=f"{API_ENDPOINT}/api/chat",
         json={
             "prompt": prompt,
             "token": gen_token(prompt),
@@ -42,7 +44,7 @@ def stream_chat(prompt: str) -> Generator[str, None, None]:
 
 def tts(text: str, download: bool = False) -> dict:
     res = requests.post(
-        url="https://ai.coludai.cn/api/tts",
+        url=f"{API_ENDPOINT}/api/tts",
         json={
             "text": text,
             "token": gen_token(text),
@@ -52,7 +54,7 @@ def tts(text: str, download: bool = False) -> dict:
         }
     ).json()
     if download:
-        with requests.get("http://ai.coludai.cn"+res["dir"], stream=True) as r:
+        with requests.get(f"{API_ENDPOINT}"+res["dir"], stream=True) as r:
             r.raise_for_status()
             with open("output.wav", "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192): 
@@ -62,7 +64,7 @@ def tts(text: str, download: bool = False) -> dict:
 
 def txt2img(text: str, download: bool = False) -> dict:
     res = requests.post(
-        url="https://ai.coludai.cn/api/txt2img",
+        url=f"{API_ENDPOINT}api/txt2img",
         json={
             "text": text,
             "token": gen_token(text),
@@ -72,7 +74,7 @@ def txt2img(text: str, download: bool = False) -> dict:
         }
     ).json()
     if download:
-        file =requests.get("http://ai.coludai.cn" + res["dir"])
+        file =requests.get(f"{API_ENDPOINT}" + res["dir"])
         with open("output.png", "wb") as f:
             f.write(file.content)
     return res
@@ -85,7 +87,7 @@ def open_files_dialog():
 
 def img_desc(file_path: str):
     res = requests.post(
-        url="https://ai.coludai.cn/api/img_desc",
+        url=f"{API_ENDPOINT}api/img_desc",
         headers={
             "ca": ""
         },
