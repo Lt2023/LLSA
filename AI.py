@@ -13,12 +13,12 @@ except ImportError as e:
     print('[Error] 无法正确引入库。错误信息：' + e)
 
 class AIApiClient:
-    def __init__(self, api_endpoint: str = 'https://ai.culudai.cn/'):
+    def __init__(self, api_endpoint: str = 'https://ai.coludai.cn/'):
         """
         初始化 AIApiClient 类实例
 
         Args:
-            api_endpoint (str): API 的基础 URL，默认为 'https://ai.culudai.cn/'。
+            api_endpoint (str): API 的基础 URL，默认为 'https://ai.coludai.cn/'。
         """
         self.api_endpoint = api_endpoint
 
