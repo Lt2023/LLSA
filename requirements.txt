@@ -1,0 +1,9 @@
+fastapi
+pydantic
+datetime
+hashlib
+requests
+tkinter
+uvicorn
+typing
+flaskAPI

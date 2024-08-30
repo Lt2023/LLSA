@@ -12,6 +12,7 @@
 ## 使用方法
 
 ### 安装
+#### 使用pip一个个输入安装（rz室长@Lt2023写的方法）
 
 1. 克隆本仓库：
 
@@ -32,10 +33,25 @@
    pip install requests flaskAPI
    ```
 
+#### pip安装
+
+1. 克隆本仓库
+   ```bash
+   git clone https://github.com/Lt2023/LLSA
+   ```
+2. 配置
+   ```bash
+   pip install -r requirements.txt
+   ```
+
 ### 运行
 
 ``` bash
 python3 AI.py
+```
+或者：
+``` bash
+python AI.py
 ```
 
 ### 贡献
