@@ -9,24 +9,8 @@ try:
     from tkinter import filedialog
     import uvicorn
     from typing import Generator, List, Dict, Union
-    import json
-    from uvicorn import logging
 except ImportError as e:
     print('[Error] 无法正确引入库。错误信息：' + e)
-
-
-
-def ReadConfigFile():
-    """配置文件读取"""
-    with open("config.json", 'r', encoding='utf-8') as file:
-        config_content = file.read()
-    return json.loads(config_content)
-
-Config = ReadConfigFile()
-
-Headers = {
-    "ca":Config["ca"]
-}
 
 class AIApiClient:
     def __init__(self, api_endpoint: str = 'https://ai.coludai.cn/'):
@@ -50,7 +34,7 @@ class AIApiClient:
         date_md5 = self.md5(now_date)[:6]
         return self.md5(text + date_md5)
 
-    def make_request(self, endpoint: str, data: dict, headers: dict = Headers, download: bool = False, file_key: str = None) -> Union[Dict[str, str], Generator[str, None, None]]:
+    def make_request(self, endpoint: str, data: dict, headers: dict = None, download: bool = False, file_key: str = None) -> Union[Dict[str, str], Generator[str, None, None]]:
         """
         通用的请求封装函数
 
@@ -146,6 +130,5 @@ async def image_description(file: UploadFile = File()) -> JSONResponse:
         f.write(contents)
     return JSONResponse(ai_client.img_desc(file_path))
 
-
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=Config["Port"])
+    uvicorn.run(app, host="0.0.0.0", port=80)
