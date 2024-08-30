@@ -43,6 +43,8 @@
    ```bash
    pip install -r requirements.txt
    ```
+> [!WARNING]  
+> 如果你遇到了`安装异常`，请及时反馈Issue!谢谢
 
 ### 运行
 
