@@ -46,6 +46,17 @@
 > [!WARNING]  
 > 如果你遇到了`安装异常`，请及时反馈Issue!谢谢
 
+### 配置[带有*号的必须配置，否则导致]
+> 配置文件默认路径：`Config.json`
+
+#### *CA 配置
+打开`config.json`,修改`ca`项
+
+#### 端口配置
+打开`config.json`,修改`Port`项
+> [!WARNING]
+> 数字一定要是int！！！
+
 ### 运行
 
 ``` bash

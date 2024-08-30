@@ -1,9 +1,12 @@
-fastapi
-pydantic
-datetime
-hashlib
 requests
-tkinter
+fastAPI
+fastapi
+flask
 uvicorn
+<<<<<<< Updated upstream
+python-multipart
+=======
 typing
 flaskAPI
+pyfiglet
+>>>>>>> Stashed changes
