@@ -156,3 +156,4 @@ async def image_description(file: UploadFile = File()) -> JSONResponse:
 if __name__ == "__main__":
     Logo_Print()
     uvicorn.run(app, host="0.0.0.0", port=Config["Port"])
+    uvicorn.run(app, host="0.0.0.0", port=1207)
