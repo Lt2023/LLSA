@@ -46,14 +46,6 @@
 > [!WARNING]  
 > 如果你遇到了`安装异常`，请及时反馈Issue!谢谢
 
-### 配置
-> 配置文件默认路径：`Config.json`
-
-#### 端口配置
-打开`config.json`,修改`Port`项
-> [!WARNING]
-> 数字一定要是int！！！
-
 ### 运行
 
 ``` bash
