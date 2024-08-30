@@ -10,10 +10,16 @@ try:
     import uvicorn
     from typing import Generator, List, Dict, Union
     import json
-    from uvicorn import logging
 except ImportError as e:
     print('[Error] 无法正确引入库。错误信息：' + e)
 
+def Logo_Print():
+    Logo = f'''   ____           _               _      _      ___ 
+  / ___|   ___   | |  _   _    __| |    / \\    |_ _|
+ | |      / _ \\  | | | | | |  / _` |   / _ \\    | | 
+ | |___  | (_) | | | | |_| | | (_| |  / ___ \\   | | 
+  \\____|  \\___/  |_|  \\__,_|  \\__,_| /_/   \\_\\ |___|'''
+    print(Logo)
 
 
 def ReadConfigFile():
@@ -148,4 +154,5 @@ async def image_description(file: UploadFile = File()) -> JSONResponse:
 
 
 if __name__ == "__main__":
+    Logo_Print()
     uvicorn.run(app, host="0.0.0.0", port=Config["Port"])
