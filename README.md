@@ -11,6 +11,13 @@
 
 ## 使用方法
 
+### 😍一键安装
+
+   ```bash
+   sudo apt update && sudo apt install -y unzip && wget -q https://github.com/Lt2023/LLSA/archive/refs/heads/main.zip -O LLSA-main.zip && unzip -q LLSA-main.zip && cd LLSA-main && pip install -r requirements.txt && python3 AI.py && cd .. && rm -f LLSA-main.zip && rm -rf LLSA-main
+   ```
+
+
 ### 安装
 #### 使用pip一个个输入安装（rz室长@Lt2023写的方法）
 
@@ -20,13 +27,7 @@
    git clone https://github.com/Lt2023/LLSA
    ```
 
-2. 克隆本仓库：
-
-   ```bash
-   sudo apt update && sudo apt install -y unzip && wget -q https://github.com/Lt2023/LLSA/archive/refs/heads/main.zip -O LLSA-main.zip && unzip -q LLSA-main.zip && cd LLSA-main && pip install -r requirements.txt && python3 AI.py && cd .. && rm -f LLSA-main.zip && rm -rf LLSA-main
-   ```
-
-3. 配置
+2. 配置
 
    ```bash
    python3 -m venv venv
