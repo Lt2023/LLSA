@@ -32,16 +32,6 @@ source venv/bin/activate.csh # csh/tcsh
 pip install requests flaskAPI
 ```
 
-3. Run
-
-``` bash
-python3 AI.py
-```
-or
-``` bash
-python AI.py
-```
-
 #### Manually install through pip+requirements.txt
 1. Clone this repository:
 
@@ -57,14 +47,27 @@ pip install -r requirements.txt
 > [!WARNING]  
 > If you encounter any errors or exceptions, please provide timely feedback on the issue.
 
-3. Run
+### Configuration (those marked with an asterisk must be configured, otherwise it will cause an exception!)
+> Default path for configuration file: `config.json`
 
-``` bash
-python3 AI.py
+#### * CA configuration
+Open `config. json` and modify the `ca` item
+> [!WARNING]
+> Please send a private message to the ColudAI department head and enter the official ColudAI group to obtain the CA, otherwise you will receive an abnormal response!
+
+
+#### Port configuration
+Open `config. json` and modify the `Port` item
+> [!WARNING]
+> The number must be an int!!!
+
+### Run
+```bash
+python AI.py
 ```
 or
-``` bash
-python AI.py
+```bash
+python3 AI.py
 ```
 
 ### Contribution
