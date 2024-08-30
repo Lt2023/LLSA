@@ -1,9 +1,6 @@
-fastapi
-pydantic
-datetime
-hashlib
 requests
-tkinter
+fastAPI
+fastapi
+flask
 uvicorn
-typing
-flaskAPI
+python-multipart
