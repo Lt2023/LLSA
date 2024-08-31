@@ -1,7 +1,7 @@
 @echo off
 
 :: 克隆仓库
-git clone https://github.com/Lt2023/LLSA
+git clone https://github.com/Lt2023/LLSA.git
 cd LLSA
 
 :: 创建并激活虚拟环境
