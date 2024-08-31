@@ -14,9 +14,9 @@
 ### 😍一键安装
 
    ```bash
-   curl -O https://raw.githubusercontent.com/Lt2023/LLSA/main/scripts/setup.sh && chmod +x setup.sh && ./setup.sh # Linux 及类 Unix 系统
-   curl -o %TEMP%\script.cmd https://raw.githubusercontent.com/Lt2023/LLSA/main/scripts/setup.cmd && %TEMP%\script.cmd # Windows 下的 CMD
-   iwr -Uri 'https://raw.githubusercontent.com/Lt2023/LLSA/main/scripts/setup.ps1' -OutFile $env:TEMP\setup.ps1; powershell -ExecutionPolicy Bypass -File $env:TEMP\setup.ps1 # PowerShell
+   curl -O https://raw.githubusercontent.com/Lt2023/LLSA/Preview/scripts/setup.sh && chmod +x setup.sh && ./setup.sh # Linux 及类 Unix 系统
+   curl -o %TEMP%\script.cmd https://raw.githubusercontent.com/Lt2023/LLSA/Preview/scripts/setup.cmd && %TEMP%\script.cmd # Windows 下的 CMD
+   iwr -Uri 'https://raw.githubusercontent.com/Lt2023/LLSA/Preview/scripts/setup.ps1' -OutFile $env:TEMP\setup.ps1; powershell -ExecutionPolicy Bypass -File $env:TEMP\setup.ps1 # PowerShell
    ```
 
 
