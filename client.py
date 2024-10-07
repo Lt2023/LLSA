@@ -36,13 +36,14 @@ class AIApiClient:
         date_md5 = self.md5(now_date)[:6]
         return self.md5(text + date_md5)
 
-    def make_request(self, endpoint: str, data: dict, download: bool = False, file_key: str = None) -> Union[Dict[str, str], Generator[str, None, None]]:
+    def make_request(self, endpoint: str, data: dict, stream: bool = False, download: bool = False, file_key: str = None) -> Union[Dict[str, str], Generator[str, None, None]]:
         """
         通用的请求封装函数
 
         Args:
             endpoint (str): API 的具体端点（例如 '/api/tts'）。
             data (dict): 要发送的 JSON 数据。
+            stream (bool, optional): 是否使用流式请求。默认为 False。
             download (bool, optional): 是否下载响应中的文件（如果存在）。默认为 False。
             file_key (str, optional): 如果要上传文件，请提供文件键名。默认为 None。
 
@@ -50,12 +51,14 @@ class AIApiClient:
             Union[Dict[str, str], Generator[str, None, None]]: 返回 API 响应或生成器（用于流式响应）。
         """
         url = f"{self.api_endpoint}{endpoint}"
+        headers = {"ca": self.config["ca"]}
+
         if file_key:
             files = {file_key: open(data[file_key], "rb")}
-            res = requests.post(url, headers=self.headers, files=files).json()
+            res = requests.post(url, headers=headers, files=files).json()
         else:
-            res = requests.post(url, json=data, headers=self.headers, stream=data.get("stream", False))
-            if data.get("stream"):
+            res = requests.post(url, json=data, headers=headers, stream=stream)
+            if stream:
                 return (line.decode("utf-8") for line in res.iter_lines() if line)
             res = res.json()
 

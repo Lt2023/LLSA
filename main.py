@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
 import uvicorn
 from client import AIApiClient
+from typing import Union
 
 # FastAPI 应用实例
 app = FastAPI()
@@ -10,6 +11,7 @@ app = FastAPI()
 # 请求体定义
 class ChatRequest(BaseModel):
     prompt: str
+    stream: bool = False
 
 class TTSRequest(BaseModel):
     text: str
@@ -23,8 +25,12 @@ class TextToImageRequest(BaseModel):
 ai_client = AIApiClient()
 
 @app.post("/chat")
-async def chat(request: ChatRequest) -> StreamingResponse:
-    return StreamingResponse(ai_client.stream_chat(request.prompt))
+async def chat(request: ChatRequest) -> Union[StreamingResponse, JSONResponse]:
+    response = ai_client.chat(request.prompt, request.stream)
+    if request.stream:
+        return StreamingResponse(response)
+    else:
+        return JSONResponse(response)
 
 @app.post("/tts")
 async def text_to_speech(request: TTSRequest) -> JSONResponse:
