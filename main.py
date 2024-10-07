@@ -8,23 +8,28 @@ from typing import Union
 # FastAPI 应用实例
 app = FastAPI()
 
+
 # 请求体定义
 class ChatRequest(BaseModel):
     prompt: str
     stream: bool = False
 
+
 class TTSRequest(BaseModel):
     text: str
     download: bool = False
+
 
 class TextToImageRequest(BaseModel):
     text: str
     download: bool = False
 
+
 # 初始化 AIApiClient
 ai_client = AIApiClient()
 
-@app.post("/chat")
+
+@app.post("/chat", response_model=None)
 async def chat(request: ChatRequest) -> Union[StreamingResponse, JSONResponse]:
     response = ai_client.chat(request.prompt, request.stream)
     if request.stream:
@@ -32,13 +37,16 @@ async def chat(request: ChatRequest) -> Union[StreamingResponse, JSONResponse]:
     else:
         return JSONResponse(response)
 
+
 @app.post("/tts")
 async def text_to_speech(request: TTSRequest) -> JSONResponse:
     return JSONResponse(ai_client.tts(request.text, request.download))
 
+
 @app.post("/txt2img")
 async def text_to_image(request: TextToImageRequest) -> JSONResponse:
     return JSONResponse(ai_client.txt2img(request.text, request.download))
+
 
 @app.post("/img_desc")
 async def image_description(file: UploadFile = File()) -> JSONResponse:
@@ -50,11 +58,11 @@ async def image_description(file: UploadFile = File()) -> JSONResponse:
 
 
 def logoPrint():
-    logo = '''   ____           _               _      _      ___ 
+    logo = """   ____           _               _      _      ___ 
   / ___|   ___   | |  _   _    __| |    / \\    |_ _|
  | |      / _ \\  | | | | | |  / _` |   / _ \\    | | 
  | |___  | (_) | | | | |_| | | (_| |  / ___ \\   | | 
-  \\____|  \\___/  |_|  \\__,_|  \\__,_| /_/   \\_\\ |___|'''
+  \\____|  \\___/  |_|  \\__,_|  \\__,_| /_/   \\_\\ |___|"""
     print(logo)
 
 

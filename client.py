@@ -6,14 +6,16 @@ import tkinter as tk
 from tkinter import filedialog
 import json
 
+
 def readConfigFile() -> dict:
     """读取配置文件"""
-    with open("config.json", 'r', encoding='utf-8') as file:
+    with open("config.json", "r", encoding="utf-8") as file:
         config_content = file.read()
     return json.loads(config_content)
 
+
 class AIApiClient:
-    def __init__(self, api_endpoint: str = 'https://ai.coludai.cn/'):
+    def __init__(self, api_endpoint: str = "https://ai.coludai.cn/"):
         """
         初始化 AIApiClient 类实例
 
@@ -27,7 +29,7 @@ class AIApiClient:
     def md5(self, text: str) -> str:
         """生成字符串的 MD5 哈希值"""
         m = hashlib.md5()
-        m.update(text.encode('utf-8'))
+        m.update(text.encode("utf-8"))
         return m.hexdigest()
 
     def gen_token(self, text: str) -> str:
@@ -36,7 +38,14 @@ class AIApiClient:
         date_md5 = self.md5(now_date)[:6]
         return self.md5(text + date_md5)
 
-    def make_request(self, endpoint: str, data: dict, stream: bool = False, download: bool = False, file_key: str = None) -> Union[Dict[str, str], Generator[str, None, None]]:
+    def make_request(
+        self,
+        endpoint: str,
+        data: dict,
+        stream: bool = False,
+        download: bool = False,
+        file_key: str = None,
+    ) -> Union[Dict[str, str], Generator[str, None, None]]:
         """
         通用的请求封装函数
 
@@ -73,21 +82,34 @@ class AIApiClient:
                             f.write(chunk)
         return res
 
-    def stream_chat(self, prompt: str) -> Generator[str, None, None]:
+    def chat(self, prompt: str) -> Generator[str, None, None]:
         """流式聊天函数"""
-        return self.make_request("/api/chat", data={"prompt": prompt, "token": self.gen_token(prompt), "stream": True})
+        return self.make_request(
+            "/api/chat",
+            data={"prompt": prompt, "token": self.gen_token(prompt), "stream": True},
+        )
 
     def tts(self, text: str, download: bool = False) -> Dict[str, str]:
         """文本转语音函数"""
-        return self.make_request("/api/tts", data={"text": text, "token": self.gen_token(text)}, download=download)
+        return self.make_request(
+            "/api/tts",
+            data={"text": text, "token": self.gen_token(text)},
+            download=download,
+        )
 
     def txt2img(self, text: str, download: bool = False) -> Dict[str, str]:
         """文本转图像函数"""
-        return self.make_request("/api/txt2img", data={"text": text, "token": self.gen_token(text)}, download=download)
+        return self.make_request(
+            "/api/txt2img",
+            data={"text": text, "token": self.gen_token(text)},
+            download=download,
+        )
 
     def img_desc(self, file_path: str) -> Dict[str, str]:
         """获取图像描述函数"""
-        return self.make_request("/api/img_desc", data={"file": file_path}, file_key="file")
+        return self.make_request(
+            "/api/img_desc", data={"file": file_path}, file_key="file"
+        )
 
     @staticmethod
     def open_files_dialog() -> List[str]:
