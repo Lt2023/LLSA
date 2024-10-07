@@ -1,38 +1,16 @@
-try:
-    from fastapi import FastAPI, File, UploadFile
-    from fastapi.responses import StreamingResponse, JSONResponse
-    from pydantic import BaseModel
-    from datetime import date
-    import hashlib
-    import requests
-    import tkinter as tk
-    from tkinter import filedialog
-    import uvicorn
-    from typing import Generator, List, Dict, Union
-    import json
-except ImportError as e:
-    print('[Error] 无法正确引入库。错误信息：' + e)
+import hashlib
+from datetime import date
+import requests
+from typing import Generator, Dict, List, Union
+import tkinter as tk
+from tkinter import filedialog
+import json
 
-def Logo_Print():
-    Logo = '''   ____           _               _      _      ___ 
-  / ___|   ___   | |  _   _    __| |    / \\    |_ _|
- | |      / _ \\  | | | | | |  / _` |   / _ \\    | | 
- | |___  | (_) | | | | |_| | | (_| |  / ___ \\   | | 
-  \\____|  \\___/  |_|  \\__,_|  \\__,_| /_/   \\_\\ |___|'''
-    print(Logo)
-
-
-def ReadConfigFile():
-    """配置文件读取"""
+def readConfigFile() -> dict:
+    """读取配置文件"""
     with open("config.json", 'r', encoding='utf-8') as file:
         config_content = file.read()
     return json.loads(config_content)
-
-Config = ReadConfigFile()
-
-Headers = {
-    "ca":Config["ca"]
-}
 
 class AIApiClient:
     def __init__(self, api_endpoint: str = 'https://ai.coludai.cn/'):
@@ -43,6 +21,8 @@ class AIApiClient:
             api_endpoint (str): API 的基础 URL，默认为 'https://ai.coludai.cn/'。
         """
         self.api_endpoint = api_endpoint
+        self.config = readConfigFile()
+        self.headers = {"ca": self.config["ca"]}
 
     def md5(self, text: str) -> str:
         """生成字符串的 MD5 哈希值"""
@@ -56,14 +36,13 @@ class AIApiClient:
         date_md5 = self.md5(now_date)[:6]
         return self.md5(text + date_md5)
 
-    def make_request(self, endpoint: str, data: dict, headers: dict = Headers, download: bool = False, file_key: str = None) -> Union[Dict[str, str], Generator[str, None, None]]:
+    def make_request(self, endpoint: str, data: dict, download: bool = False, file_key: str = None) -> Union[Dict[str, str], Generator[str, None, None]]:
         """
         通用的请求封装函数
 
         Args:
             endpoint (str): API 的具体端点（例如 '/api/tts'）。
             data (dict): 要发送的 JSON 数据。
-            headers (dict, optional): 请求头，默认为 None。
             download (bool, optional): 是否下载响应中的文件（如果存在）。默认为 False。
             file_key (str, optional): 如果要上传文件，请提供文件键名。默认为 None。
 
@@ -73,9 +52,9 @@ class AIApiClient:
         url = f"{self.api_endpoint}{endpoint}"
         if file_key:
             files = {file_key: open(data[file_key], "rb")}
-            res = requests.post(url, headers=headers, files=files).json()
+            res = requests.post(url, headers=self.headers, files=files).json()
         else:
-            res = requests.post(url, json=data, headers=headers, stream=data.get("stream", False))
+            res = requests.post(url, json=data, headers=self.headers, stream=data.get("stream", False))
             if data.get("stream"):
                 return (line.decode("utf-8") for line in res.iter_lines() if line)
             res = res.json()
@@ -114,45 +93,3 @@ class AIApiClient:
         root.withdraw()
         files_paths = filedialog.askopenfilenames()
         return list(files_paths)
-
-# 创建FastAPI应用实例
-app = FastAPI()
-
-class ChatRequest(BaseModel):
-    prompt: str
-
-class TTSRequest(BaseModel):
-    text: str
-    download: bool = False
-
-class TextToImageRequest(BaseModel):
-    text: str
-    download: bool = False
-
-# 初始化AIApiClient对象
-ai_client = AIApiClient()
-
-@app.post("/chat")
-async def chat(request: ChatRequest) -> StreamingResponse:
-    return StreamingResponse(ai_client.stream_chat(request.prompt))
-
-@app.post("/tts")
-async def text_to_speech(request: TTSRequest) -> JSONResponse:
-    return JSONResponse(ai_client.tts(request.text, request.download))
-
-@app.post("/txt2img")
-async def text_to_image(request: TextToImageRequest) -> JSONResponse:
-    return JSONResponse(ai_client.txt2img(request.text, request.download))
-
-@app.post("/img_desc")
-async def image_description(file: UploadFile = File()) -> JSONResponse:
-    file_path = file.filename
-    contents = await file.read()
-    with open(file_path, "wb") as f:
-        f.write(contents)
-    return JSONResponse(ai_client.img_desc(file_path))
-
-
-if __name__ == "__main__":
-    Logo_Print()
-    uvicorn.run(app, host="0.0.0.0", port=Config["Port"])
