@@ -14,7 +14,7 @@
 ### 😍一键安装
 
    ```bash
-   sudo apt update && sudo apt install -y unzip && wget -q https://github.com/Lt2023/LLSA/archive/refs/heads/main.zip -O LLSA-main.zip && unzip -q LLSA-main.zip && cd LLSA-main && pip install -r requirements.txt && python3 AI.py && cd .. && rm -f LLSA-main.zip && rm -rf LLSA-main
+   sudo apt update && sudo apt install -y unzip && wget -q https://github.com/Lt2023/LLSA/archive/refs/heads/main.zip -O LLSA-main.zip && unzip -q LLSA-main.zip && cd LLSA-main && pip install -r requirements.txt && python3 main.py && cd .. && rm -f LLSA-main.zip && rm -rf LLSA-main
    ```
 
 
@@ -70,11 +70,11 @@
 ### 运行
 
 ``` bash
-python3 AI.py
+python3 main.py
 ```
 或者：
 ``` bash
-python AI.py
+python main.py
 ```
 
 ### 贡献
