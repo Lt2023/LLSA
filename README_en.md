@@ -63,11 +63,11 @@ Open `config. json` and modify the `Port` item
 
 ### Run
 ```bash
-python AI.py
+python main.py
 ```
 or
 ```bash
-python3 AI.py
+python3 main.py
 ```
 
 ### Contribution
