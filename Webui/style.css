@@ -1,0 +1,171 @@
+.bk {
+    width: 100%;
+    height: 100vh;
+    opacity: 1;
+    border-radius: 0px; 
+    z-index: -99999;
+    display: flex;
+    flex-direction: column;   /*设置主轴方向是水平方向*/
+    align-items: center;  /*设置侧轴上，子元素的排列方式为居中对齐*/
+
+}
+.dibu {
+    width: 700px;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;   /*设置主轴方向是水平方向*/
+    align-items: center;  /*设置侧轴上，子元素的排列方式为居中对齐*/
+    justify-content: center;  /*设置主轴上，子元素的排列方式为左对齐*/
+    background: linear-gradient(90deg, #4481EB 0%, #09A9E1 100%);
+    border-radius: 64px;
+    height: auto;
+    padding: 2px;
+    
+}
+::-webkit-scrollbar {
+    display: none;
+  }
+.container {
+    z-index: 99999;
+    display: flex;
+    margin-left: 48px;
+    margin-top: 24px;
+    width: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-size: cover;
+}
+
+.imgbk {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    backdrop-filter: blur(100px);
+}
+.content {
+    width: 88%;
+    height: 84vh;
+    border: 0px solid #fff;
+    margin: 24px 24px 0px 24px;
+    border-radius: 12px;
+    overflow: auto;
+}
+.minput {
+    width: 100%;
+    height: 48px;
+    border-radius: 64px;
+    border: none;
+    background-color: white;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
+    outline: none;
+    padding-left: 24px;
+    padding-right: 24px;
+    border: 2px solid initial;
+    border-image: linear-gradient(90deg, #4481EB 0%, #09A9E1 100%);
+} 
+.message
+{
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin: 5px 0;
+}
+.message p
+{
+    position: relative;
+    right: 0;
+    text-align: right;
+    max-width: 65%;
+    padding: 12px;
+
+    background-color: white;
+    border-radius: 10px;
+    font-size: 0.9em;
+    color: rgb(0, 0, 0);
+}
+
+.message-SAI
+{
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin: 5px 0;
+}
+.message-SAI p
+{
+    position: relative;
+    right: 0;
+    text-align: right;
+    max-width: 65%;
+    padding: 12px;
+    border: 4px solid; 
+    border-radius: 16px;        
+    border-image: linear-gradient(180deg, #5FB1FF 0%, #09BDFE 100%) 4;
+    clip-path: inset(0 round 8px);
+    font-size: 0.9em;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+}
+
+.message p::before
+{
+    background: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -12px;
+    width: 20px;
+    height: 20px;
+
+}
+.message p span
+{
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85em;
+    opacity: 0.5;
+}
+.my_message
+{
+    justify-content: flex-end;
+}
+.frnd_message
+{
+    justify-content: flex-start;
+}
+.frnd_message p
+{
+    background: #ffffff;
+    text-align: left;
+    color: black;
+}
+.message.frnd_message p::before
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -12px;
+    width: 20px;
+    height: 20px;
+    background: none;
+}
+
+.chatBox {
+    width: 96%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;   /*设置主轴方向是水平方向*/
+    justify-content: start;
+    overflow: auto;
+    align-items: space-between;  /*设置侧轴上，子元素的排列方式为居中对齐*/
+
+}
+::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+}
+

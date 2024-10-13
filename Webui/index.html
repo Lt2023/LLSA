@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webui-beta</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./crypto.js" referrerpolicy="no-referrer"></script>
+    <script>
+      function getValue() {
+          var input = document.getElementById('messageinput');
+          input.oninput = function() {
+              document.getElementById("sendChat").style.background = 'linear-gradient(131deg, #66B0FF 21%, #04BEFE 95%)'; // 修改按钮 ID 和样式
+          };
+      }
+
+      function calculateMd5(inputString) {
+          return CryptoJS.MD5(inputString).toString();
+      }
+
+      function genToken(reqText) {
+          const currentDate = new Date();
+          const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+          const dateMd5 = calculateMd5(formattedDate).substring(0, 6); // 截取前6位
+          const token = calculateMd5(reqText + dateMd5);
+          return token;
+      }
+
+      async function sendChat() {
+          getValue(); // 调用 getValue 函数
+
+          const prompt = document.getElementById('messageinput').value;
+          if (prompt.trim() === '') {
+              alert('请输入消息');
+              return;
+          }
+
+          const content = document.getElementById('content');
+          if (content) {
+              // 显示用户输入的消息
+              content.insertAdjacentHTML('beforeend', `<div style="display: flex; flex-direction: row; align-items: center;">
+                  <div class="message my_message"><p>${prompt}<br></p></div>
+                  <div style="margin-left: 12px;margin-right: 16px;border-radius: 500px;display: flex;flex-direction: row;align-items: center;justify-content: center;">
+                      <img src="Vector.svg" alt="" width="16px" style="width: 15px;height: 15px;padding: 9px;background-color: white;border-radius: 500px;">
+                  </div>
+              </div>`);
+
+              // 清除输入框
+              document.getElementById('messageinput').value = '';
+
+              const token = genToken(prompt);
+
+              try {
+                  const response = await fetch('http://localhost:1145/', {
+                      method: 'POST',
+                      headers: {
+                      },
+                      body: JSON.stringify({
+                          prompt: prompt
+                      })
+                  });
+
+                  if (!response.ok) {
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+
+                  const data = await response.json();
+                  if (content) { // 检查 messageBox 是否存在
+                      content.insertAdjacentHTML('beforeend', `<div style="display: flex; flex-direction: row; align-items: center;">
+                          <div style="margin-left: 12px;margin-right: 16px;border-radius: 500px;display: flex;flex-direction: row;align-items: center;justify-content: center;">
+                              <img src="SAI.svg" alt="" width="35px" style="width: 35px;height: 35px;border-radius: 500px;">
+                          </div>
+                          <div class="message-SAI"><p>${data.output}<br></p></div>
+                      </div>`);
+                  } else {
+                      console.error('The content element does not exist.');
+                  }
+              } catch (error) {
+                  console.error(error);
+                  document.getElementById('response').innerText = '发生错误，请检查输入或稍后再试。';
+              }
+          }
+      }
+
+      window.onload = function() {
+          function sendChat() {
+              sendChat();
+          };
+      };
+    </script>
+</head>
+<body background="组 4@1x (4).png">
+    <div class="bk">
+        <div class="container">
+            <img src="icon.svg" alt="" style="margin-left: 24px;">
+            <h2 style="margin: 0px 16px 2.5px 16px; font-size: 24px; font-weight: 900; color: #fff;">LLM Mode</h2>
+        </div>
+        <div class="content" id="content">
+          
+        </div>       
+        <div class="dibu">
+             <input type="text" class="minput" placeholder="Message SAI..." id="messageinput" onkeypress="myFunction(event)">
+
+        </div>  
+    <div>
+        <button style="
+        display: flex;
+        flex-direction: row;   /*设置主轴方向是水平方向*/
+        align-items: center;  /*设置侧轴上，子元素的排列方式为居中对齐*/
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(131deg, #66B0FF 21%, #04BEFE 95%);
+        border-radius: 20px;
+        margin-bottom: 0px;
+        z-index: 2222;
+        position: relative;
+        bottom: 47px;
+        left: 322px;
+        border: none;
+        
+        " id="sendChat1" class="btn1" onclick="sendChat()">
+          <img src="arrow-down-line.svg" alt="" width="20px">
+    </button>      
+    <script>
+        function myFunction(event) {
+          if (event.keyCode === 13) {
+             document.getElementById("sendChat1").click();
+          }
+}
+    </script>
+</body>
+</html>
