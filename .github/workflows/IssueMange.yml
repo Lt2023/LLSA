@@ -1,0 +1,52 @@
+name: Manage Issue Labels
+permissions:
+  issues: write
+  contents: write
+
+on:
+  issues:
+    types: [opened, closed]
+
+jobs:
+  manage-labels:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create or add label for new issues
+        if: ${{ github.event.action == 'opened' }}
+        run: |
+          LABEL_NAME="等待处理"
+          LABEL_COLOR="ff0000"  # You can change the color code as needed
+
+          # Create the label if it doesn't exist
+          if ! gh label list | grep -q "$LABEL_NAME"; then
+            gh label create "$LABEL_NAME" --color "$LABEL_COLOR" --description "Issues awaiting processing"
+          fi
+
+          # Add the label to the new issue
+          gh issue edit ${{ github.event.issue.number }} --add-label "$LABEL_NAME"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Manage labels for closed issues
+        if: ${{ github.event.action == 'closed' }}
+        run: |
+          LABEL_TO_REMOVE="等待处理"
+          LABEL_TO_ADD="已处理"
+          LABEL_COLOR="00ff00"  # You can change the color code as needed
+
+          # Remove the "等待处理" label
+          gh issue edit ${{ github.event.issue.number }} --remove-label "$LABEL_TO_REMOVE"
+
+          # Create the "已处理" label if it doesn't exist
+          if ! gh label list | grep -q "$LABEL_TO_ADD"; then
+            gh label create "$LABEL_TO_ADD" --color "$LABEL_COLOR" --description "Processed issues"
+          fi
+
+          # Add the "已处理" label to the issue
+          gh issue edit ${{ github.event.issue.number }} --add-label "$LABEL_TO_ADD"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
